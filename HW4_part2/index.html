@@ -10,49 +10,69 @@ Last Updated: November 10, 2021, at 9:00 AM
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multiplication Table Generator</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- jQuery UI Stylesheet -->
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+  </head>
+  <body>
     <!-- Page Title -->
     <h1>Multiplication Table Generator</h1>
 
     <!-- Multiplication Form -->
     <form id="multiplicationForm">
-        <!-- Form Instructions -->
-        <div class="form-instructions">Please enter values for the multiplication table:</div>
+      <!-- Form Instructions -->
+      <div class="form-instructions">
+        Please enter values for the multiplication table:
+      </div>
+      <!-- Input Fields -->
+      <label for="startHorizontal">Start Row:</label>
+      <div id="sliderStartHorizontal"></div>
+      <input type="number" id="startHorizontal" name="startHorizontal" />
 
-        <!-- Input Fields -->
-        <label for="startHorizontal">Start Row:</label>
-        <input type="number" id="startHorizontal" name="startHorizontal" >
+      <label for="endHorizontal">End Row:</label>
+      <div id="sliderEndHorizontal"></div>
+      <input type="number" id="endHorizontal" name="endHorizontal" />
 
-        <label for="endHorizontal">End Row:</label>
-        <input type="number" id="endHorizontal" name="endHorizontal" >
+      <label for="startVertical">Start Column:</label>
+      <div id="sliderStartVertical"></div>
+      <input type="number" id="startVertical" name="startVertical" />
 
-        <label for="startVertical">Start Column:</label>
-        <input type="number" id="startVertical" name="startVertical" >
+      <label for="endVertical">End Column:</label>
+      <div id="sliderEndVertical"></div>
+      <input type="number" id="endVertical" name="endVertical" />
 
-        <label for="endVertical">End Column:</label>
-        <input type="number" id="endVertical" name="endVertical" >
-        
-        <!-- Generate Table Button -->
-        <button type="submit">Generate Table</button>
+      <!-- Generate Table Button -->
+      <button type="submit">Generate Table</button>
     </form>
+    
+    <!-- Buttons for Deleting Tabs -->
+    <button id="deleteSelectedTabs">Delete Selected Tabs</button>
+    <button id="deleteAllTabs">Delete All Tabs</button>
+
+    <div id="tabs">
+      <ul>
+      </ul>
+    </div>
 
     <!-- Table Container -->
     <div id="tableContainer" class="scrollable-container">
-        <table id="multiplicationTable">
-            <!-- Table content will be inserted here dynamically -->
-        </table>
+      <table id="multiplicationTable">
+        <!-- Table content will be inserted here dynamically -->
+      </table>
     </div>
 
-    <!-- JavaScript Script -->
+    <!-- jQuery UI Script -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <!-- JavaScript Script -->
     <script src="js/script.js"></script>
-
-</body>
+  </body>
 </html>

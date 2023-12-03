@@ -7,67 +7,71 @@
 // // updated by Porchhay on November, 10 at 9:00 AM
 
 $(document).ready(function () {
-  debug: true,
-    $("#multiplicationForm").validate({
-      // rule for the form
-      rules: {
-        startHorizontal: {
-          required: true,
-          number: true,
-          range: [-50, 50],
-        },
-        endHorizontal: {
-          required: true,
-          number: true,
-          range: [-50, 50],
-        },
-        startVertical: {
-          required: true,
-          number: true,
-          range: [-50, 50],
-        },
-        endVertical: {
-          required: true,
-          number: true,
-          range: [-50, 50],
-        },
+  $("#multiplicationForm").validate({
+    // rule for the form
+    rules: {
+      startHorizontal: {
+        required: true,
+        number: true,
+        range: [-50, 50],
       },
+      endHorizontal: {
+        required: true,
+        number: true,
+        range: [-50, 50],
+      },
+      startVertical: {
+        required: true,
+        number: true,
+        range: [-50, 50],
+      },
+      endVertical: {
+        required: true,
+        number: true,
+        range: [-50, 50],
+      },
+    },
 
-      // custom messages for the form
-      messages: {
-        startHorizontal: {
-          required: "Please enter a value for the start row",
-          range: "Please enter a value between -50 and 50",
-        },
-        endHorizontal: {
-          required: "Please enter a value for the end row",
-          range: "Please enter a value between -50 and 50",
-        },
-        startVertical: {
-          required: "Please enter a value for the start column",
-          range: "Please enter a value between -50 and 50",
-        },
-        endVertical: {
-          required: "Please enter a value for the end column",
-          range: "Please enter a value between -50 and 50",
-        },
+    // custom messages for the form
+    messages: {
+      startHorizontal: {
+        required: "Please enter a value for the start row",
+        range: "Please enter a value between -50 and 50",
       },
-      // submit call generate table function with input values
-      submitHandler: function (form) {
-        const startVerticalInt = parseInt($("#startVertical").val())
-        const endVerticalInt = parseInt($("#endVertical").val())
-        const startHorizontalInt = parseInt($("#startHorizontal").val())
-        const endHorizontalInt = parseInt($("#endHorizontal").val())
+      endHorizontal: {
+        required: "Please enter a value for the end row",
+        range: "Please enter a value between -50 and 50",
+      },
+      startVertical: {
+        required: "Please enter a value for the start column",
+        range: "Please enter a value between -50 and 50",
+      },
+      endVertical: {
+        required: "Please enter a value for the end column",
+        range: "Please enter a value between -50 and 50",
+      },
+    },
 
-        generateTable(
-          startVerticalInt,
-          endVerticalInt,
-          startHorizontalInt,
-          endHorizontalInt
-        )
-        return false // Prevent the form from submitting
-      },
-    })
+    // enable validation as the user types
+    onkeyup: function (element) {
+      $(element).valid()
+    },
+    // submit call generate table function with input values
+    submitHandler: function (form) {
+      const startVerticalInt = parseInt($("#startVertical").val())
+      const endVerticalInt = parseInt($("#endVertical").val())
+      const startHorizontalInt = parseInt($("#startHorizontal").val())
+      const endHorizontalInt = parseInt($("#endHorizontal").val())
+
+      generateTable(
+        startVerticalInt,
+        endVerticalInt,
+        startHorizontalInt,
+        endHorizontalInt
+      )
+      return false // Prevent the form from submitting
+    },
+  })
 })
 
 function generateTable(

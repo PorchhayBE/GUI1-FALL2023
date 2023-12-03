@@ -8,137 +8,187 @@ Last Updated: November 10, 2021, at 9:00 AM */
 
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f8f8f8;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f8f8f8;
 }
 
 /* Page Title */
 h1 {
-    color: #333; 
-    text-align: center; 
-    margin-top: 20px; 
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Form Styles */
 form {
-    display: flex;
-    flex-direction: column;
-    max-width: 300px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Form Label Styles */
 label {
-    margin-bottom: 8px;
-    font-weight: bold;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
 
 /* Input Field Styles */
 input {
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 /* Style the input when it has focus */
 input:focus {
-    border-color: #007bff; /* Change the border color when focused */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow for focus */
-    outline: none; /* Remove the default focus outline */
+  border-color: #007bff; /* Change the border color when focused */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow for focus */
+  outline: none; /* Remove the default focus outline */
 }
-
 
 /* Button Styles */
 button {
-    padding: 10px;
-    background-color: black;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 10px;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #333;
-    color: #fff;
+  background-color: #333;
+  color: #fff;
 }
 
 /* Table Styles */
 table {
-    border-collapse: collapse;
-    width: 100%;
-    overflow-x: auto;
-    margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
 }
 
 /* Table Cell Styles */
-th, td {
-    border: 1px dotted #ddd;
-    padding: 8px;
-    text-align: center;
+th,
+td {
+  border: 1px dotted #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
 /* Scrollable Container Styles */
 .scrollable-container {
-    max-height: 400px;
-    overflow-y: auto;
-    overflow-x: auto;
-    margin-top: 30px;
-    scroll-snap-type: proximity;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin-top: 30px;
+  scroll-snap-type: proximity;
 }
 
 /* Error Message Styles */
 label.error {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-    position: relative;
-    bottom: 20px;
-    display: none;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  position: relative;
+  bottom: 20px;
+  display: none;
 }
 
 input.error {
-    border: 1px solid red; /* Set a red border for the input with an error */
+  border: 1px solid red; /* Set a red border for the input with an error */
 }
-
 
 /* Header Row Styles */
 .row_header {
-    top: 0;
-    position: sticky;
-    z-index: 10000;
-    color: white;
-    background-color: gray;
+  top: 0;
+  position: sticky;
+  z-index: 10000;
+  color: white;
+  background-color: gray;
 }
 
 /* Header Column Styles */
 .column_header {
-    position: sticky;
-    left: 0;
-    background-color: gray;
-    color: white;
-    z-index: 20000;
+  position: sticky;
+  left: 0;
+  background-color: gray;
+  color: white;
+  z-index: 20000;
 }
 
 /* Blank Header Styles */
 .blank_header {
-    top: 0;
-    left: 0;
-    position: sticky;
-    z-index: 30000;
-    background-color: gray;
+  top: 0;
+  left: 0;
+  position: sticky;
+  z-index: 30000;
+  background-color: gray;
 }
 
 /* Form Instructions Styles */
 .form-instructions {
-    margin-bottom: 16px;
-    font-size: 14px;
-    color: #333;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #333;
+}
+
+.ui-slider {
+  /* Adjust the width of the slider */
+  width: 100%;
+  margin: 10px auto;
+}
+
+.ui-slider-handle {
+  width: 20px; /* Adjust the width of the handle */
+  height: 10px; /* Adjust the height of the handle */
+}
+
+#myTabs {
+  width: 400px;
+  padding: 5px;
+  border: 1px solid #636363;
+  background: #c2c2c2 none;
+}
+.ui-widget-header {
+  border: 0;
+  background: #c2c2c2 none;
+  font-family: Georgia;
+}
+#myTabs .ui-widget-content {
+  border: 1px solid #aaa;
+  background: #fff none;
+  font-size: 80%;
+}
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+  border: 1px solid #636363;
+  background: #a2a2a2 none;
+}
+.ui-state-active,
+.ui-widget-content .ui-state-active {
+  border: 1px solid #aaa;
+  background: #fff none;
+}
+
+.table-container {
+  max-width: 100%;
+  max-height: 300px; /* Adjust the max height as needed */
+  overflow: auto;
+  scroll-snap-type: proximity;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 10px;
+  margin-top: 13px;
 }
