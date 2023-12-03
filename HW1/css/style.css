@@ -1,0 +1,68 @@
+
+/* File: style.css
+GUI Assignment: Creating Your First Web Page
+Porchhay Be, UMass Lowell Computer Science,
+porchhay_be@student.uml.edu
+Copyright (c) 2021 by Porchhay. All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
+updated by Porchhay on September, 25 at 9:00 AM */
+
+body {
+    /* use Arial, and sansserif as the default font */
+    font-family: Arial, sans-serif;
+    /* set the width of the body to 800px */
+    /* so it doesnot strech */
+    max-width: 800px;
+
+    /* center the body */
+    /* margin top bottom :0 left right: auto; which center the body */
+    margin: 0 auto;
+
+    /*add some space in between the body */
+    padding: 20px;
+}
+
+/* change header color */
+h3 {
+    color: #333;
+}
+/* space in between each line in the paragraph */
+p {
+    line-height: 1.6;
+}
+/* set the width of the image to 100% of the parent element */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+/* value in data cell and header cell are left aligned and have border around them */
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+/* change table header background so it more contrast */
+th {
+    background-color: #f2f2f2;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* Optional: Add some spacing between elements */
+h3, p, img, table, ul {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,59 @@
+<!--
+File: index.html
+GUI Assignment: Multiplication Table Generator
+Author: Porchhay Be
+Contact: porchhay_be@student.uml.edu
+Copyright (c) 2021 by Porchhay. All rights reserved.
+May be freely copied or excerpted for educational purposes with credit to the author.
+Last Updated: November 10, 2021, at 9:00 AM
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Table Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Page Title -->
+    <h1>Multiplication Table Generator</h1>
+
+    <!-- Multiplication Form -->
+    <form id="multiplicationForm">
+        <!-- Form Instructions -->
+        <div class="form-instructions">Please enter values for the multiplication table:</div>
+
+        <!-- Input Fields -->
+        <label for="startHorizontal">Start Row:</label>
+        <input type="number" id="startHorizontal" name="startHorizontal" min="-50" max="50" required>
+        <div id="error-startHorizontal" class="error-message"></div>
+
+        <label for="endHorizontal">End Row:</label>
+        <input type="number" id="endHorizontal" name="endHorizontal" min="-50" max="50" required>
+        <div id="error-endHorizontal" class="error-message"></div>
+
+        <label for="startVertical">Start Column:</label>
+        <input type="number" id="startVertical" name="startVertical" min="-50" max="50" required>
+        <div id="error-startVertical" class="error-message"></div>
+
+        <label for="endVertical">End Column:</label>
+        <input type="number" id="endVertical" name="endVertical" min="-50" max="50" required>
+        <div id="error-endVertical" class="error-message"></div>
+
+        <!-- Generate Table Button -->
+        <button type="button" onclick="generateTable()">Generate Table</button>
+    </form>
+
+    <!-- Table Container -->
+    <div id="tableContainer" class="scrollable-container">
+        <table id="multiplicationTable">
+            <!-- Table content will be inserted here dynamically -->
+        </table>
+    </div>
+
+    <!-- JavaScript Script -->
+    <script src="js/script.js"></script>
+</body>
+</html>
