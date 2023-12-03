@@ -16,8 +16,6 @@ Tools: HTML, CSS, Javascript, Bootstrap, Jquery
 
 [HW4_part2](https://porchhaybe.github.io/GUI1-FALL2023/HW4_part2/index.html)
 
-[Inclass3](https://porchhaybe.github.io/GUI1-FALL2023/inclass3/index.html)
-
 [Inclass4_part1](https://porchhaybe.github.io/GUI1-FALL2023/inclass4/example1_source/add-content.html)
 
 [Inclass4_part2](https://porchhaybe.github.io/GUI1-FALL2023/inclass4/example2_source/example.html)
