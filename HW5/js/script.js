@@ -8,11 +8,11 @@
 
 "use strict"
 
-var Z_INDEX_DIALOG = 100
-var Z_INDEX_TILE_ON_DRAG = 99
-var TEXT_COLOR_ACTIVE = "#339933"
-var TEXT_COLOR_NORMAL = ""
-var TEXT_COLOR_INVALID = "red"
+var z_index = 100
+var z_index_tile = 99
+var text_active = "#339933"
+var text_regular = ""
+var text_error = "red"
 
 // DataStructure for the scrabble tiles.
 var scrabbleTiles = []
@@ -179,55 +179,54 @@ scrabbleTiles["_"] = {
   image: "img/scrabble/Scrabble_Tile_Blank.jpg",
 }
 
-var scrabbleBoard = {}
+var board = {}
 
-// scrabbleBoard
-scrabbleBoard.slots = []
-scrabbleBoard.slots[0] = []
-scrabbleBoard.slots[0][0] = {
+// board
+board.slots = []
+board.slots[0] = []
+board.slots[0][0] = {
   letterMultiplier: 1,
   wordMultiplier: 1,
-  image: "img/scrabble/Scrabble_BlankSquare_81x87.jpg",
+  image: "img/scrabble/Scrabble_Blank.jpg",
 }
-scrabbleBoard.slots[0][1] = {
+board.slots[0][1] = {
   letterMultiplier: 1,
   wordMultiplier: 2,
-  image: "img/scrabble/Scrabble_DoubleWordScore_81x87.jpg",
+  image: "img/scrabble/Scrabble_DoubleWord.jpg",
 }
-scrabbleBoard.slots[0][2] = {
+board.slots[0][2] = {
   letterMultiplier: 1,
   wordMultiplier: 1,
-  image: "img/scrabble/Scrabble_BlankSquare_81x87.jpg",
+  image: "img/scrabble/Scrabble_Blank.jpg",
 }
-scrabbleBoard.slots[0][3] = {
+board.slots[0][3] = {
   letterMultiplier: 1,
   wordMultiplier: 1,
-  image: "img/scrabble/Scrabble_BlankSquare_81x87.jpg",
+  image: "img/scrabble/Scrabble_Blank.jpg",
 }
-scrabbleBoard.slots[0][4] = {
+board.slots[0][4] = {
   letterMultiplier: 1,
   wordMultiplier: 1,
-  image: "img/scrabble/Scrabble_BlankSquare_81x87.jpg",
+  image: "img/scrabble/Scrabble_Blank.jpg",
 }
-scrabbleBoard.slots[0][5] = {
+board.slots[0][5] = {
   letterMultiplier: 1,
   wordMultiplier: 2,
-  image: "  img/scrabble/Scrabble_DoubleWordScore_81x87.jpg",
+  image: "  img/scrabble/Scrabble_DoubleWord.jpg",
 }
-scrabbleBoard.slots[0][6] = {
+board.slots[0][6] = {
   letterMultiplier: 1,
   wordMultiplier: 1,
-  image: "img/scrabble/Scrabble_BlankSquare_81x87.jpg",
+  image: "img/scrabble/Scrabble_Blank.jpg",
 }
 
-scrabbleBoard.rowCount = Object.keys(scrabbleBoard.slots).length
-scrabbleBoard.columnCount = Object.keys(scrabbleBoard.slots[0]).length
-
+board.rowCount = board.slots.length
+board.columnCount = board.slots[0].length
 // Track current score.
-var scrabbleScore = { totalScore: 0, highestScore: 0 }
+var score = { totalScore: 0, highestScore: 0 }
 
 // Calculates and returns the score for the tiles currently on the board.
-scrabbleScore.calculateBoardScore = function () {
+score.calculateScore = function () {
   var iRow,
     iCol,
     letter,
@@ -241,16 +240,15 @@ scrabbleScore.calculateBoardScore = function () {
 
   // Calculates the score for the tiles currently on the board.
   // Returns the total score based on the letter values and board multipliers.
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      letter = scrabbleBoard.slots[iRow][iCol].letter
+  for (iRow = 0; iRow < board.rowCount; ++iRow) {
+    for (iCol = 0; iCol < board.columnCount; ++iCol) {
+      letter = board.slots[iRow][iCol].letter
       if (letter) {
         letterValue = scrabbleTiles[letter].value
-        boardScore +=
-          letterValue * scrabbleBoard.slots[iRow][iCol].letterMultiplier
+        boardScore += letterValue * board.slots[iRow][iCol].letterMultiplier
 
         // We're pre-multiplying all the word modifiers here.
-        wordMultiplier *= scrabbleBoard.slots[iRow][iCol].wordMultiplier
+        wordMultiplier *= board.slots[iRow][iCol].wordMultiplier
       }
     }
   }
@@ -262,51 +260,48 @@ scrabbleScore.calculateBoardScore = function () {
 }
 
 // Updates the scoreboard texts based on the current tiles layout.
-scrabbleScore.refresh = function () {
-  var boardScore = scrabbleScore.calculateBoardScore()
+score.refresh = function () {
+  var boardScore = score.calculateScore()
 
-  $("#score").css("color", TEXT_COLOR_NORMAL)
+  $("#score").css("color", text_regular)
   $("#score").html(
-    scrabbleScore.totalScore +
-      " (+<span id='boardScore'>" +
-      boardScore +
-      "</span>)"
+    score.totalScore + " (+<span id='boardScore'>" + boardScore + "</span>)"
   )
   if (boardScore > 0) {
-    $("#boardScore").css("color", TEXT_COLOR_ACTIVE)
+    $("#boardScore").css("color", text_active)
   } else {
-    $("#boardScore").css("color", TEXT_COLOR_INVALID)
+    $("#boardScore").css("color", text_error)
   }
 
-  $("#highestScore").html(scrabbleScore.highestScore)
+  $("#highestScore").html(score.highestScore)
 }
 
 // Updates the total score and the highest score variables based on the current tiles layout.
-scrabbleScore.commit = function () {
-  var boardScore = scrabbleScore.calculateBoardScore()
+score.update_total_score = function () {
+  var boardScore = score.calculateScore()
 
-  scrabbleScore.totalScore += boardScore
-  $("#score").html(scrabbleScore.totalScore)
-  if (scrabbleScore.totalScore > 0) {
-    $("#score").css("color", TEXT_COLOR_ACTIVE)
+  score.totalScore += boardScore
+  $("#score").html(score.totalScore)
+  if (score.totalScore > 0) {
+    $("#score").css("color", text_active)
   }
 
-  if (scrabbleScore.totalScore > scrabbleScore.highestScore) {
-    scrabbleScore.highestScore = scrabbleScore.totalScore
-    $("#highestScore").html(scrabbleScore.totalScore)
-    $("#highestScore").css("color", TEXT_COLOR_ACTIVE)
+  if (score.totalScore > score.highestScore) {
+    score.highestScore = score.totalScore
+    $("#highestScore").html(score.totalScore)
+    $("#highestScore").css("color", text_active)
   }
 }
 
 // Resets the score to 0 and updates the page as necessary.
-scrabbleScore.restart = function () {
-  scrabbleScore.totalScore = 0
+score.restart = function () {
+  score.totalScore = 0
   $("#score").html(0)
-  $("#highestScore").css("color", TEXT_COLOR_NORMAL)
+  $("#highestScore").css("color", text_regular)
 }
 
 // Creates all DOM elements necessary to construct the board.
-scrabbleBoard.createBoardHtml = function () {
+board.createBoardHtml = function () {
   var row, col, bgImagePath, newSlot
   var BG_IMAGE_WIDTH = 81,
     BG_IMAGE_HEIGHT = 87,
@@ -316,20 +311,18 @@ scrabbleBoard.createBoardHtml = function () {
   // Set the fixed height for the board appropriate for the number of rows.
   $("#board").css(
     "height",
-    (BG_IMAGE_HEIGHT + 2 * (SLOT_MARGIN + SLOT_BORDER_WIDTH)) *
-      scrabbleBoard.rowCount
+    (BG_IMAGE_HEIGHT + 2 * (SLOT_MARGIN + SLOT_BORDER_WIDTH)) * board.rowCount
   )
   // Set the fixed width for the board to accomodate one full row.
   $("#board").css(
     "width",
-    (BG_IMAGE_WIDTH + 2 * (SLOT_MARGIN + SLOT_BORDER_WIDTH)) *
-      scrabbleBoard.columnCount
+    (BG_IMAGE_WIDTH + 2 * (SLOT_MARGIN + SLOT_BORDER_WIDTH)) * board.columnCount
   )
 
   // Lay down the board images.
-  for (row = 0; row < scrabbleBoard.rowCount; ++row) {
-    for (col = 0; col < scrabbleBoard.columnCount; ++col) {
-      bgImagePath = scrabbleBoard.slots[row][col].image
+  for (row = 0; row < board.rowCount; ++row) {
+    for (col = 0; col < board.columnCount; ++col) {
+      bgImagePath = board.slots[row][col].image
       newSlot = $(
         '<div class="boardSlot" row="' +
           row +
@@ -351,43 +344,43 @@ scrabbleBoard.createBoardHtml = function () {
 }
 
 // Drops all tile images from the board and updates the board slot data structure accordingly.
-scrabbleBoard.clearBoard = function () {
+board.clearBoard = function () {
   var iRow, iCol
 
   $("#board img").remove()
 
   // Reset the slot data structure.
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      delete scrabbleBoard.slots[iRow][iCol].tileId
-      delete scrabbleBoard.slots[iRow][iCol].letter
+  for (iRow = 0; iRow < board.rowCount; ++iRow) {
+    for (iCol = 0; iCol < board.columnCount; ++iCol) {
+      delete board.slots[iRow][iCol].tileId
+      delete board.slots[iRow][iCol].letter
     }
   }
 }
 
 // Returns the id of the tile that is on the slot.
-scrabbleBoard.getTileIdFromSlot = function (row, col) {
-  return scrabbleBoard.slots[row][col].tileId
+board.getTileIdFromSlot = function (row, col) {
+  return board.slots[row][col].tileId
 }
 
 // Returns the letter of the tile that is on the slot. ex) "A"
-scrabbleBoard.getLetterFromSlot = function (row, col) {
-  return scrabbleBoard.slots[row][col].letter
+board.getLetterFromSlot = function (row, col) {
+  return board.slots[row][col].letter
 }
 
 // Returns true if the slot is marked as empty. False, otherwise.
-scrabbleBoard.isSlotEmpty = function (row, col) {
-  return typeof scrabbleBoard.slots[row][col].tileId === "undefined"
+board.isSlotEmpty = function (row, col) {
+  return typeof board.slots[row][col].tileId === "undefined"
 }
 
-// Return row and column of the slow that is empty, after the last occupied slot.
+// Return row and column of the slot that is empty slot for the next occupied slot.
 // If there are no empty slots, return false.
-scrabbleBoard.findEmptySlot = function (firstSlot) {
+board.find_next_open_spot = function (firstSlot) {
   var iRow, iCol
 
-  for (iRow = firstSlot[0]; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = firstSlot[1]; iCol < scrabbleBoard.columnCount; ++iCol) {
-      if (scrabbleBoard.isSlotEmpty(iRow, iCol)) {
+  for (iRow = firstSlot[0]; iRow < board.rowCount; ++iRow) {
+    for (iCol = firstSlot[1]; iCol < board.columnCount; ++iCol) {
+      if (board.isSlotEmpty(iRow, iCol)) {
         return [iRow, iCol]
       }
     }
@@ -398,12 +391,12 @@ scrabbleBoard.findEmptySlot = function (firstSlot) {
 
 // Return row and col of the first slot that is occupied
 // If there are no occupied slots, return false.
-scrabbleBoard.findFirstSlot = function () {
+board.findFirstTile = function () {
   var iRow, iCol
 
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      if (!scrabbleBoard.isSlotEmpty(iRow, iCol)) {
+  for (iRow = 0; iRow < board.rowCount; ++iRow) {
+    for (iCol = 0; iCol < board.columnCount; ++iCol) {
+      if (!board.isSlotEmpty(iRow, iCol)) {
         return [iRow, iCol]
       }
     }
@@ -413,11 +406,11 @@ scrabbleBoard.findFirstSlot = function () {
 }
 
 // Return true if all slots are empty. False, otherwise.
-scrabbleBoard.isBoardEmpty = function () {
+board.isBoardEmpty = function () {
   var iRow, iCol
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      if (!scrabbleBoard.isSlotEmpty(iRow, iCol)) {
+  for (iRow = 0; iRow < board.rowCount; ++iRow) {
+    for (iCol = 0; iCol < board.columnCount; ++iCol) {
+      if (!board.isSlotEmpty(iRow, iCol)) {
         return false
       }
     }
@@ -425,61 +418,38 @@ scrabbleBoard.isBoardEmpty = function () {
   return true
 }
 
-// Return row and column of the slot that is the only slot on the board
-// that has a tile on it. If there are more than one slot with tiles, return false.
-scrabbleBoard.isOneSlot = function () {
-  var iRow,
-    iCol,
-    numSlots = 0,
-    row,
-    col
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      if (!scrabbleBoard.isSlotEmpty(iRow, iCol)) {
-        ++numSlots
-        row = iRow
-        col = iCol
-      }
-    }
-  }
-  if (numSlots == 1) {
-    return [row, col]
-  }
-  return false
-}
-
 // Updates the board slot data structure so that the slot at [row][col] contains
-scrabbleBoard.addToSlot = function (tileId, letter, row, col) {
+board.addSlot = function (tileId, letter, row, col) {
   var iRow, iCol
 
   // If the tile came from another slot, clear that slot.
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      if (scrabbleBoard.slots[iRow][iCol].tileId === tileId) {
-        delete scrabbleBoard.slots[iRow][iCol].tileId
-        delete scrabbleBoard.slots[iRow][iCol].letter
+  for (iRow = 0; iRow < board.rowCount; ++iRow) {
+    for (iCol = 0; iCol < board.columnCount; ++iCol) {
+      if (board.slots[iRow][iCol].tileId === tileId) {
+        delete board.slots[iRow][iCol].tileId
+        delete board.slots[iRow][iCol].letter
       }
     }
   }
 
   // Record that this slot has the tile now.
-  scrabbleBoard.slots[row][col].letter = letter
-  scrabbleBoard.slots[row][col].tileId = tileId
+  board.slots[row][col].letter = letter
+  board.slots[row][col].tileId = tileId
 }
 
 // Marks the slot empty.
-scrabbleBoard.deleteFromSlot = function (row, col) {
-  delete scrabbleBoard.slots[row][col].tileId
-  delete scrabbleBoard.slots[row][col].letter
+board.deleteSlot = function (row, col) {
+  delete board.slots[row][col].tileId
+  delete board.slots[row][col].letter
 }
 
 // Locate the position of the tile on the board.
-scrabbleBoard.findSlotFromTileId = function (tileId) {
+board.findSlot = function (tileId) {
   var iRow, iCol
 
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      if (scrabbleBoard.slots[iRow][iCol].tileId === tileId) {
+  for (iRow = 0; iRow < board.rowCount; ++iRow) {
+    for (iCol = 0; iCol < board.columnCount; ++iCol) {
+      if (board.slots[iRow][iCol].tileId === tileId) {
         return [iRow, iCol]
       }
     }
@@ -487,29 +457,6 @@ scrabbleBoard.findSlotFromTileId = function (tileId) {
 
   return false
 }
-
-// Debug function to print the status of the board.
-scrabbleBoard.printBoard = function () {
-  var iRow, iCol
-
-  for (iRow = 0; iRow < scrabbleBoard.rowCount; ++iRow) {
-    for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-      console.log(
-        "scrabbleBoard.slots[" +
-          iRow +
-          "][" +
-          iCol +
-          "] letter: " +
-          scrabbleBoard.slots[iRow][iCol].letter +
-          ", tileId: " +
-          scrabbleBoard.slots[iRow][iCol].tileId
-      )
-    }
-  }
-}
-
-// For convenience.
-var printBoard = scrabbleBoard.printBoard
 
 // Removes n random letter tiles from the deck adjusting the remaining-number properties for the scrabbleTiles.
 function getFromDeck(n) {
@@ -583,7 +530,7 @@ function restart() {
   $("#letterRack img").remove()
 
   // Remove all tiles from the board.
-  scrabbleBoard.clearBoard()
+  board.clearBoard()
 
   // Reset the deck data structure.
   for (var key in scrabbleTiles) {
@@ -596,7 +543,7 @@ function restart() {
   // If we had consumed all tiles in the previous round, 'finish' button would be up.
   toggleFinishButton(false)
 
-  scrabbleScore.restart()
+  score.restart()
 
   // Start the first word.
   nextWord()
@@ -606,10 +553,10 @@ function restart() {
 function nextWord() {
   var i, key, tileImageId, newTile, hand
 
-  scrabbleScore.commit()
+  score.update_total_score()
 
   // Clear the board.
-  scrabbleBoard.clearBoard()
+  board.clearBoard()
 
   // Draw as many tiles as needed to refill the rack with 7 tiles. Lay out the tile images.
   hand = getFromDeck(7 - numTilesOnRack())
@@ -639,7 +586,7 @@ function nextWord() {
       revertDuration: 200, // msec
       start: function (event, ui) {
         // Tile should be on top of everything else when being dragged.
-        $(this).css("z-index", Z_INDEX_TILE_ON_DRAG)
+        $(this).css("z-index", z_index_tile)
 
         // Revert option needs to be manually reset because it may be modified by droppables
         $(this).draggable("option", "revert", "invalid")
@@ -670,11 +617,12 @@ function nextWord() {
 
 // Adds up the current board score to the total score and stops the play.
 function finish() {
-  scrabbleScore.commit()
+  score.update_total_score()
 
   // Once you finish, it doesn't make sense to finish again.
   // Disable next-word/finish button.
   document.getElementById("nextWordButton").disabled = true
+  $("#word").html("&minus;")
 
   // Also prevent all tiles from being dragged any more.
   $(".letterTile").draggable("disable")
@@ -705,8 +653,8 @@ function validateWord() {
     ROW = 0
 
   // Read each letter from the board and append them to word string.
-  for (iCol = 0; iCol < scrabbleBoard.columnCount; ++iCol) {
-    letter = scrabbleBoard.getLetterFromSlot(ROW, iCol)
+  for (iCol = 0; iCol < board.columnCount; ++iCol) {
+    letter = board.getLetterFromSlot(ROW, iCol)
     if (typeof letter === "undefined") {
       // Use special character to represent an empty slot.
       word += "\xB7" // middle dot character
@@ -749,11 +697,11 @@ function validateWord() {
 
   if (errorCount) {
     document.getElementById("nextWordButton").disabled = true
-    $("#word").css("color", TEXT_COLOR_INVALID)
+    $("#word").css("color", text_error)
     return false
   }
 
-  $("#word").css("color", TEXT_COLOR_ACTIVE)
+  $("#word").css("color", text_active)
   document.getElementById("nextWordButton").disabled = false
   return word
 }
@@ -824,20 +772,20 @@ function openBlankTileDialog(blankTileDraggable, tileId, row, col) {
 
         // Update the board data structure.
         tileId = blankTileDraggable.attr("id")
-        scrabbleBoard.addToSlot(tileId, newLetter, row, col)
+        board.addSlot(tileId, newLetter, row, col)
 
         // Validate and display the word we have so far.
         validateWord()
 
         // Update the score with the selected letter.
-        scrabbleScore.refresh()
+        score.refresh()
 
         tileSelectorDialog.dialog("close")
       })
       tileSelectorDialog.append(newTile)
     }
   }
-  tileSelectorDialog.css("z-index", Z_INDEX_DIALOG)
+  tileSelectorDialog.css("z-index", z_index)
   tileSelectorDialog.dialog({
     modal: true,
     draggable: false,
@@ -847,31 +795,32 @@ function openBlankTileDialog(blankTileDraggable, tileId, row, col) {
 
 // Window Load - Start the game.
 $(window).load(function () {
-  scrabbleBoard.createBoardHtml()
+  board.createBoardHtml()
 
   // Make the board slots droppable.
   $(".boardSlot").droppable({
     // This function determines whether the slot gets highlighted as an acceptable dropping zone
     // when a tile is being dragged.
-    accept: function () {
+    accept: function (event, ui) {
       var row, col
       row = $(this).attr("row")
       col = $(this).attr("col")
-      
-      // Check for openning tile on the board
-      // call findFirstSlot() to get position of the first slot on the board
-      var firstSlotonBoard = scrabbleBoard.findFirstSlot()
-      if (firstSlotonBoard) {
-        // call findEmptySlot() to get position of open slot after the first slot occupied on the board
-         var firstEmplySlot = scrabbleBoard.findEmptySlot(firstSlotonBoard)
-         // user can't drop tile on the board if there is no empty slot after the first slot occupied
-         if (col != firstEmplySlot[1]){
-           return false;
-         }
-      }
 
+      // Check for openning tile on the board
+      // call findFirstTile() to get position of the first slot on the board
+      var firstSlotonBoard = board.findFirstTile()
+      if (firstSlotonBoard) {
+        // call findOpenSpot() to get position of open slot after the first slot occupied on the board
+        var firstEmplySlot = board.find_next_open_spot(firstSlotonBoard)
+
+        // user can't drop tile on the board if there is no empty slot next to the first occupied slot
+        // check if the next slots is not empty then can't accept the action
+        if (col != firstEmplySlot[1]) {
+          return false
+        }
+      }
       // check for empty tile on the board
-      if (scrabbleBoard.isSlotEmpty(row, col)) {
+      if (board.isSlotEmpty(row, col)) {
         // The slot is empty.
         return true
       } else {
@@ -880,21 +829,19 @@ $(window).load(function () {
       }
     },
     hoverClass: "hoverHighlight",
-    activeClass: function(event, ui) {
-      var col = $(this).attr("col");
-
+    activeClass: function (event, ui) {
+      var col = $(this).attr("col")
       // Check if the current slot matches the emplySlot position
-      var firstSlotonBoard = scrabbleBoard.findFirstSlot()
+      var firstSlotonBoard = board.findFirstTile()
       if (firstSlotonBoard) {
-        var firstEmplySlot = scrabbleBoard.findEmptySlot(firstSlotonBoard)
+        var firstEmplySlot = board.find_next_open_spot(firstSlotonBoard)
         if (col == firstEmplySlot[1]) {
           // apply activeClass to the emplySlot
-          return "dragHighlight";
+          return "dragHighlight"
         }
       }
-      
       // Return an empty string if not the emplySlot
-        return "";
+      return ""
     },
     drop: function (event, ui) {
       var row, col, letter, tileId
@@ -918,12 +865,12 @@ $(window).load(function () {
       if ($(ui.draggable).hasClass("blankTile")) {
         openBlankTileDialog($(ui.draggable), tileId, row, col)
       } else {
-        scrabbleBoard.addToSlot(tileId, letter, row, col)
+        board.addSlot(tileId, letter, row, col)
         // Validate and display the word
         validateWord()
 
         // Calculate the score and update the page.
-        scrabbleScore.refresh()
+        score.refresh()
       }
     },
   })
@@ -946,10 +893,10 @@ $(window).load(function () {
       }
 
       tileId = ui.draggable.attr("id")
-      pos = scrabbleBoard.findSlotFromTileId(tileId)
+      pos = board.findSlot(tileId)
       if (pos) {
         // The tile came from the board. Mark it off the board data structure.
-        scrabbleBoard.deleteFromSlot(pos[0], pos[1])
+        board.deleteSlot(pos[0], pos[1])
 
         // Snap the tile image to the back of the rack.
         $("#letterRack").append(ui.draggable)
@@ -959,11 +906,15 @@ $(window).load(function () {
         word = validateWord()
 
         // Calculate the score and update the page.
-        scrabbleScore.refresh()
+        score.refresh()
       } else {
         // User grabbed the tile and put it right back on the rack. Use the revert function
         // to put the tile in the same spot it came out of.
         ui.draggable.draggable("option", "revert", true)
+      }
+
+      if (board.isBoardEmpty()) {
+        $("#word").html("&minus;")
       }
     },
   })
